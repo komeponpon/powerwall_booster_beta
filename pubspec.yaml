@@ -1,0 +1,44 @@
+name: powerwall_booster_beta
+description: "A Powerwall control App."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  url_launcher: ^6.3.0
+  cupertino_icons: ^1.0.8
+  webview_flutter: ^4.8.0
+  crypto: ^3.0.3
+  http: ^1.2.1
+  provider: ^6.1.2
+  retrofit: ^4.1.0
+  logger: ^2.3.0
+  dio: ^5.4.3+1
+  http_mock_adapter: ^0.6.1
+  flutter_datetime_picker_plus: ^2.2.0
+  json_annotation: ^4.9.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/icon.png"
+
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.11
+  retrofit_generator: ^8.1.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - images/
