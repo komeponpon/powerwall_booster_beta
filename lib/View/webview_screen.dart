@@ -20,6 +20,7 @@ class WebViewScreen extends StatefulWidget {
 class _WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
   bool isLoading = false;
+  bool isWebViewVisible = true;
   String codeVerifier = '';
 
   @override
@@ -51,9 +52,14 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   // アクセストークンをProviderにセット
                   context.read<TokenProvider>().accessToken = token.accessToken;
 
+                  // WebViewを非表示にしてローディング画面を表示
+                  setState(() {
+                    isWebViewVisible = false;
+                    isLoading = true;
+                  });
+
                   // 画面遷移
-                  debugPrint('Current context: $context');
-                  await Navigator.push(
+                  await Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => SettingScreen(),
@@ -63,8 +69,18 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   // 画面遷移後にトークンが正しくセットされていることを確認
                   debugPrint(
                       'Updated Access Token: ${Provider.of<TokenProvider>(context, listen: false).accessToken}');
+
+                  // ローディング画面を非表示に
+                  setState(() {
+                    isLoading = false;
+                  });
                 } catch (e) {
                   debugPrint('Failed to get token: $e');
+                  // WebViewを再表示してエラーメッセージを表示する
+                  setState(() {
+                    isWebViewVisible = true;
+                    isLoading = false;
+                  });
                 }
               } else {
                 debugPrint('Authorization failed');
@@ -115,25 +131,32 @@ class _WebViewScreenState extends State<WebViewScreen> {
           },
         ),
       ),
-      body: _buildbody(),
+      body: _buildBody(),
       resizeToAvoidBottomInset: true,
     );
   }
 
-  Widget _buildbody() {
+  Widget _buildBody() {
     return Column(
       children: [
         if (isLoading)
           LinearProgressIndicator(
             color: Colors.blueAccent,
           ),
-        Expanded(child: _buildWebView()),
+        Expanded(
+            child: isWebViewVisible ? _buildWebView() : _buildLoadingScreen()),
       ],
     );
   }
 
   Widget _buildWebView() {
     return WebViewWidget(controller: _controller);
+  }
+
+  Widget _buildLoadingScreen() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
   }
 
   String generateRandomString(int length) {
