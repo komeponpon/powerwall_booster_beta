@@ -7,17 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:powerwall_booster_beta/View/setting_screen.dart';
 import 'package:powerwall_booster_beta/Model/api_client.dart';
-
-class TokenProvider extends ChangeNotifier {
-  String _accessToken = '';
-
-  String get accessToken => _accessToken;
-
-  set accessToken(String token) {
-    _accessToken = token;
-    notifyListeners();
-  }
-}
+import 'package:powerwall_booster_beta/model/token_provider.dart';
 
 const _clientId = 'ownerapi';
 const _redirectUri = 'https://auth.tesla.com/void/callback';
