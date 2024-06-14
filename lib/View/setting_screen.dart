@@ -69,7 +69,7 @@ class SettingScreen extends StatelessWidget {
     final accessToken = context.watch<TokenProvider>().accessToken;
     return ListTile(
       title: Text(
-        'バックアップ蓄電率',
+        'バックアップ蓄電率（始）',
         style: TextStyle(
           color: Color.fromARGB(255, 237, 210, 8),
           fontSize: 24,
